@@ -11,7 +11,7 @@ void build_graph_cmd(pnode *head)
     char newNode = NULL;
 
     // scanf("%d", &numberOfNodes);
-    // pNode = (pnode *)malloc(numberOfNodes * sizeof(node));
+    // pNode = (pnode)malloc(numberOfNodes * sizeof(node));
     // if (pNode == NULL)
     // { // allocation failed
     //     exit(0);
