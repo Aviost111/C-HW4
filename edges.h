@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "graph.h"
 
-bool create_edge(int weight, pnode endpoint);
+bool create_edge(pedge *head,int weight,int endpoint);
 void print_edge(pedge head);
 
 #endif

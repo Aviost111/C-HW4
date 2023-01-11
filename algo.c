@@ -1,70 +1,76 @@
 #include "graph.h"
 #include "nodes.h"
+#include "edges.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
 
-void build_graph_cmd(pnode *head)
-{
+
+void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
-    pnode pNode = NULL, findN = NULL, realHead = *head;
-    pedge pEdge = NULL;
+    pnode pNode = NULL, findN=NULL,realHead=*head;
+    pedge pEdge=NULL;
     bool found;
     char input;
-    int inputNum, inputNum2;
-    //    char newNode = NULL;
+    int inputNum,inputNum2;
+//    char newNode = NULL;
 
     scanf("%d", &numberOfNodes);
-    if (numberOfNodes == 0)
-    {
+    if(numberOfNodes==0){
         return;
     }
-    *head = (pnode)malloc(sizeof(node));
-    pNode = *head;
-    if (pNode == NULL)
-    { // allocation failed
+    if(!create_node(head)){
         printf("error");
         exit(0);
     }
+    pNode=*head;
     input = getchar();
-    for (int i = 0; i < numberOfNodes; i++)
-    {
+    for (int i = 0; i < numberOfNodes; i++) {
         scanf("%d", &inputNum);
-        pNode->node_num = inputNum;
-        if (scanf("%d%d", &inputNum, &inputNum2) == 2)
-        {
-            pNode->edges = (pedge)malloc(sizeof(edge));
-            pEdge = pNode->edges;
-            pEdge->weight = inputNum2;
+        pNode->node_num=inputNum;
+        if(scanf("%d%d", &inputNum,&inputNum2) == 2){
+            findN=realHead;
+            if(!findNode(&findN,inputNum)){
+                printf("error creating node");
+                exit(0);
+            }
+            if(!create_edge(&(pNode->edges),inputNum2))
+            pNode->edges= (pedge)malloc(sizeof (edge));
+            pEdge=pNode->edges;
+            pEdge->weight=inputNum2;
+            if(!findNode(&(pEdge->endpoint),inputNum))
+
         }
-        while (scanf("%d%d", &inputNum, &inputNum2) == 2)
-        {
+        while (scanf("%d%d", &inputNum,&inputNum2) == 2) {
+            pEdge=pEdge->next;
+            pEdge
         }
         findN = realHead;
+        if (findNode(&findN, 2))
+        {
+        }
     }
+
+
+
 }
 
-void delete_node_cmd(pnode *head)
-{
+void delete_node_cmd(pnode *head) {
 }
 
-void deleteGraph_cmd(pnode *head)
-{
-    if (head == NULL)
-    {
+void deleteGraph_cmd(pnode *head) {
+    if (head == NULL) {
         return;
     }
     pnode currNode = *head;
     pnode nextNode;
 
-    while (currNode != NULL)
-    {
+    while (currNode != NULL) {
         pedge currEdge = currNode->edges;
         pedge nextEdge = NULL;
-        while (currEdge != NULL)
-        {
+        while (currEdge != NULL) {
             nextEdge = currEdge->next;
             free(currEdge);
             currEdge = nextEdge;
