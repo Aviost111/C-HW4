@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool craete_edge(int weight, pnode endpoint){
+bool create_edge(int weight, pnode endpoint){
     pedge new_edge = (pedge)malloc(sizeof(edge));
     if(new_edge ==NULL){
         //allocation failed
@@ -16,7 +16,7 @@ bool craete_edge(int weight, pnode endpoint){
     return 1;
 }
 
-void print_egde(pedge head){
+void print_edge(pedge head){
     pedge current = head;
     while(current != NULL){
         printf("%d" , current->endpoint->node_num);
