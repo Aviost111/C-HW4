@@ -5,20 +5,31 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool findNode(pnode head){
-
+bool findNode(pnode* head,int find_num){
+    pnode curr=*head;
+    while (curr!=NULL){
+        if(curr->node_num==find_num) {
+            *head=curr;
+            return true;
+        }
+        curr=curr->next;
+    }
+    return false;
 }
-bool create_node(int node_num)
+bool create_node(pnode* newNode)
 {
-    pnode new_node = (pnode)malloc(sizeof(node));
+    pnode new_node;
+    new_node = (pnode)malloc(sizeof(node));
     if (new_node == NULL)
     {
         // allocation failed
         return false;
     }
-    new_node->node_num = node_num;
+    //TODO is good to leave as 0?
+    new_node->node_num = 0;
     new_node->edges = NULL;
     new_node->next = NULL;
+    *newNode=new_node;
     return true;
 }
 

@@ -1,13 +1,16 @@
 #include "graph.h"
+#include "nodes.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 
 void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
-    pnode pNode = NULL;
+    pnode pNode = NULL, findN=NULL,realHead=*head;
     pedge pEdge=NULL;
+    bool found;
     char input;
     int inputNum,inputNum2;
 //    char newNode = NULL;
@@ -17,12 +20,12 @@ void build_graph_cmd(pnode *head) {
         return;
     }
     *head = (pnode) malloc(sizeof(node));
+    pNode=*head;
     if (pNode == NULL) { // allocation failed
         printf("error");
         exit(0);
     }
     input = getchar();
-    pNode=*head;
     for (int i = 0; i < numberOfNodes; i++) {
         scanf("%d", &inputNum);
         pNode->node_num=inputNum;
@@ -35,7 +38,11 @@ void build_graph_cmd(pnode *head) {
         while (scanf("%d%d", &inputNum,&inputNum2) == 2) {
 
         }
-        head = (pnode * )malloc(sizeof(node));
+        findN=realHead;
+        if(findNode(&findN,2)){
+
+        }
+    }
 
 
 
