@@ -5,5 +5,6 @@
 
 bool create_node(int node_num);
 void print_node(pnode head);
+bool findNode(pnode head);
 
-#endif;
+#endif

@@ -5,18 +5,21 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+bool findNode(pnode head){
+
+}
 bool create_node(int node_num)
 {
     pnode new_node = (pnode)malloc(sizeof(node));
     if (new_node == NULL)
     {
         // allocation failed
-        return 0;
+        return false;
     }
     new_node->node_num = node_num;
     new_node->edges = NULL;
     new_node->next = NULL;
-    return 1;
+    return true;
 }
 
 void print_node(pnode head)

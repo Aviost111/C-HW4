@@ -36,22 +36,6 @@ void build_graph_cmd(pnode *head) {
 
         }
         head = (pnode * )malloc(sizeof(node));
-//         if(scanf("%d",&inputNum)<1){
-//             getchar();
-//             continue;
-//         }
-
-
-    }
-    //         int nodeNum = 0;
-    //         scanf("%d", &newNode);
-    //         pNode -> node_num = newNode;
-
-
-    //     }
-
-
-    // }
 
 
 

@@ -8,12 +8,12 @@ bool create_edge(int weight, pnode endpoint){
     pedge new_edge = (pedge)malloc(sizeof(edge));
     if(new_edge ==NULL){
         //allocation failed
-        return 0;
+        return false;
     }
     new_edge->weight = weight;
-    new_edge->next = endpoint;
+    new_edge->endpoint = endpoint;
     new_edge->next = NULL;
-    return 1;
+    return true;
 }
 
 void print_edge(pedge head){
