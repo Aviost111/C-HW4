@@ -1,5 +1,6 @@
 #include "graph.h"
 #include "nodes.h"
+#include "edges.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,24 +20,31 @@ void build_graph_cmd(pnode *head) {
     if(numberOfNodes==0){
         return;
     }
-    *head = (pnode) malloc(sizeof(node));
-    pNode=*head;
-    if (pNode == NULL) { // allocation failed
+    if(!create_node(head)){
         printf("error");
         exit(0);
     }
+    pNode=*head;
     input = getchar();
     for (int i = 0; i < numberOfNodes; i++) {
         scanf("%d", &inputNum);
         pNode->node_num=inputNum;
         if(scanf("%d%d", &inputNum,&inputNum2) == 2){
+            findN=realHead;
+            if(!findNode(&findN,inputNum)){
+                printf("error creating node");
+                exit(0);
+            }
+            if(!create_edge(&(pNode->edges),inputNum2))
             pNode->edges= (pedge)malloc(sizeof (edge));
             pEdge=pNode->edges;
             pEdge->weight=inputNum2;
+            if(!findNode(&(pEdge->endpoint),inputNum))
 
         }
         while (scanf("%d%d", &inputNum,&inputNum2) == 2) {
-
+            pEdge=pEdge->next;
+            pEdge
         }
         findN=realHead;
         if(findNode(&findN,2)){
