@@ -4,7 +4,7 @@
 int main()
 {
     char option = 0;
-    pnode head = NULL;
+    pnode* head = NULL;
 
     while(scanf("%c", &option) != EOF)
     {

@@ -1,8 +1,9 @@
+#ifndef EDGES_
+#define EDGES_
+#include <stdbool.h>
 #include "graph.h"
-#ifndef EDGESH_
-#define EDGESH_
 
-bool craete_edge(int weight, pnode endpoint);
-void print_egde(pedge head);
+bool create_edge(int weight, pnode endpoint);
+void print_edge(pedge head);
 
-#endif;
+#endif

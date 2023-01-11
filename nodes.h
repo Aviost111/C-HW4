@@ -1,8 +1,9 @@
+#include <stdbool.h>
 #include "graph.h"
-#ifndef NODESH_
-#define NODESH_
+#ifndef NODES_
+#define NODES_
 
-bool craete_node(int node_num);
+bool create_node(int node_num);
 void print_node(pnode head);
 
 #endif;

@@ -1,5 +1,6 @@
-#include "graph.h"
 #include <stdio.h>
+#include "nodes.h"
+#include "graph.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
