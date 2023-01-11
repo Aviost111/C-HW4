@@ -5,18 +5,21 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool findNode(pnode* head,int find_num){
-    pnode curr=*head;
-    while (curr!=NULL){
-        if(curr->node_num==find_num) {
-            *head=curr;
+bool findNode(pnode *head, int find_num)
+{
+    pnode curr = *head;
+    while (curr != NULL)
+    {
+        if (curr->node_num == find_num)
+        {
+            *head = curr;
             return true;
         }
-        curr=curr->next;
+        curr = curr->next;
     }
     return false;
 }
-bool create_node(pnode* newNode)
+bool create_node(pnode *newNode)
 {
     pnode new_node;
     new_node = (pnode)malloc(sizeof(node));
@@ -25,11 +28,11 @@ bool create_node(pnode* newNode)
         // allocation failed
         return false;
     }
-    //TODO is good to leave as 0?
+    // TODO is good to leave as 0?
     new_node->node_num = 0;
     new_node->edges = NULL;
     new_node->next = NULL;
-    *newNode=new_node;
+    *newNode = new_node;
     return true;
 }
 
@@ -39,7 +42,7 @@ void print_node(pnode head)
     printf("edges: ");
     while (head->edges != NULL)
     {
-        
+
         head->edges = head->edges->next;
     }
     printf("\n");

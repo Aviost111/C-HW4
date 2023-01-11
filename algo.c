@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 void build_graph_cmd(pnode *head)
 {
@@ -42,9 +43,6 @@ void build_graph_cmd(pnode *head)
         {
         }
         findN = realHead;
-        if (findNode(&findN, 2))
-        {
-        }
     }
 }
 
@@ -74,5 +72,26 @@ void deleteGraph_cmd(pnode *head)
         nextNode = currNode->next;
         free(currNode);
         currNode = nextNode;
+    }
+}
+void insert_node_cmd(pnode *head)
+{
+    int node_num = getchar();
+    pnode pnew_node = *head;
+    if (findNode(&pnew_node, node_num))
+    {
+    }
+
+    else
+    { // node doesn't exsits
+        pnew_node = NULL;
+        create_node(&pnew_node);
+        pnew_node->node_num = node_num;
+        do
+        {
+        } while (/* condition */){
+            
+        };
+ 
     }
 }
