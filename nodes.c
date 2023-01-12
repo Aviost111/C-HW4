@@ -14,18 +14,18 @@ bool findNode(pnode *head, int find_num)
 
         if (curr->node_num == find_num)
         {
-            **head = *curr;
+            *head = curr;
             return true;
         }
-        *prev=*curr;
+        prev=curr;
         curr = curr->next;
     }
-    **head= *prev;
+    *head= prev;
     return false;
 }
 bool create_node(pnode *newNode)
 {
-    pnode new_node;
+    pnode new_node=NULL;
     new_node = (pnode)malloc(sizeof(node));
     if (new_node == NULL)
     {

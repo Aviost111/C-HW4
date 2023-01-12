@@ -9,75 +9,75 @@
 
 void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
-    pnode pNode = NULL,realHead=NULL,temp=NULL;
-    pedge pEdge=NULL;
+    pnode pNode = NULL, realHead = NULL, temp = NULL;
+    pedge pEdge = NULL;
     char input;
-    int inputNum,inputNum2;
+    int inputNum, inputNum2;
 
     scanf("%d", &numberOfNodes);
-    if(numberOfNodes==0){
+    if (numberOfNodes == 0) {
         return;
     }
     //create the head node
-    if(!create_node(head)){
+    if (!create_node(head)) {
         printf("error");
         exit(0);
     }
     //pnode points to first node
-    *pNode=**head;
-    *realHead=*pNode;
-    pEdge=pNode->edges;
-    scanf(" %c",&input);
+//    pNode = *head;
+    realHead = *head;
+//    pEdge=&(pNode->edges);
+    scanf(" %c", &input);
     for (int i = 1; i < numberOfNodes; i++) {
         //get and update node_num
-        *temp=*realHead;
+        temp = realHead;
         scanf("%d", &inputNum);
-        if((!findNode(&temp,inputNum))&&(i!=1)){
+        if ((!findNode(&temp, inputNum)) && (i != 1)) {
             //make it
-            if(!create_node(&(temp->next))){
+            if (!create_node(&(temp->next))) {
                 printf("error");
                 exit(0);
             }
-            temp=temp->next;
+            temp = temp->next;
+            pNode=temp;
+            pNode->node_num = inputNum;
         }
-        *pNode=*temp;
-        pNode->node_num=inputNum;
-        pEdge=pNode->edges;
+        pNode = temp;
+        if(pNode->node_num==0) {
+            pNode->node_num = inputNum;
+        }
+        pEdge = pNode->edges;
         //create all edges;
-        while(scanf("%d%d", &inputNum,&inputNum2) == 2){
-            temp=realHead;
+        while (scanf("%d%d", &inputNum, &inputNum2) == 2) {
+            temp = realHead;
             //if it cant find the node ,create it.
-            if(!findNode(&temp,inputNum)){
-//                temp=pNode->next;
-//                while(temp!=NULL){
-//                    temp=temp->next;
-//                }
-                if(!create_node(&(temp->next))){
+            if (!findNode(&temp, inputNum)) {
+                if (!create_node(&(temp->next))) {
                     printf("error");
                     exit(0);
                 }
-                temp=temp->next;
-                temp->node_num=inputNum;
+                temp = temp->next;
+                temp->node_num = inputNum;
             }
-            if(!create_edge(&(pEdge),inputNum2,inputNum,realHead)){
-                printf("problem creating edge");
-                exit(0);
+            if (pNode->edges == NULL) {
+                if (!create_edge(&(pNode->edges), inputNum2, inputNum, realHead)) {
+                    printf("problem creating edge");
+                    exit(0);
+                }
+                pEdge = pNode->edges;
+            } else {
+                if (!create_edge(&(pEdge->next), inputNum2, inputNum, realHead)) {
+                    printf("problem creating edge");
+                    exit(0);
+                }
+                pEdge = pEdge->next;
             }
-            //go to next edge in edges
-            pEdge=pEdge->next;
-
         }
-        if(i!=numberOfNodes-1){
-            scanf(" %c",&input);
-//            if(!create_node(&(pNode->next))){
-//                printf("error");
-//                exit(0);
-//            }
+
+        if (i != numberOfNodes - 1) {
+            scanf(" %c", &input);
         }
     }
-
-
-
 }
 
 void delete_node_cmd(pnode *head) {
@@ -103,16 +103,12 @@ void deleteGraph_cmd(pnode *head) {
         currNode = nextNode;
     }
 }
-void insert_node_cmd(pnode *head)
-{
+
+void insert_node_cmd(pnode *head) {
     int node_num = getchar();
     pnode pnew_node = *head;
-    if (findNode(&pnew_node, node_num))
-    {
-    }
-
-    else
-    { // node doesn't exsits
+    if (findNode(&pnew_node, node_num)) {
+    } else { // node doesn't exsits
         pnew_node = NULL;
         create_node(&pnew_node);
         pnew_node->node_num = node_num;
@@ -121,6 +117,6 @@ void insert_node_cmd(pnode *head)
 //        } while (/* condition */){
 //
 //        }
- 
+
     }
 }
