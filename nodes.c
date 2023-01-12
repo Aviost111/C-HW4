@@ -8,15 +8,19 @@
 bool findNode(pnode *head, int find_num)
 {
     pnode curr = *head;
+    pnode prev=NULL;
     while (curr != NULL)
     {
+
         if (curr->node_num == find_num)
         {
-            *head = curr;
+            **head = *curr;
             return true;
         }
+        *prev=*curr;
         curr = curr->next;
     }
+    **head= *prev;
     return false;
 }
 bool create_node(pnode *newNode)

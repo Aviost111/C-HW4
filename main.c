@@ -6,7 +6,7 @@ int main()
     char option = 0;
     pnode* head = NULL;
 
-    while(scanf("%c", &option) != EOF)
+    while(scanf(" %c", &option) != EOF)
     {
         switch (option)
         {
@@ -16,19 +16,19 @@ int main()
             break;
 
         case 'B':
-            insert_node_cmd(&head);
+//            insert_node_cmd(&head);
             break;
 
         case 'D':
-            delete_node_cmd(&head);
+//            delete_node_cmd(&head);
             break;
 
         case 'S':
-            shortsPath_cmd(head);
+//            shortsPath_cmd(head);
 
             break;
         case 'T':
-            TSP_cmd(head);
+//            TSP_cmd(head);
             break;
         }
     }

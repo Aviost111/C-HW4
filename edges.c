@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool create_edge(pedge *head,int weight, int endpoint){
+bool create_edge(pedge *head,int weight, int endpoint,pnode realHead){
     pedge new_edge = (pedge)malloc(sizeof(edge));
-    pnode pNode=NULL;
+    pnode pNode=realHead;
     if(new_edge ==NULL){
         //allocation failed
         return false;
