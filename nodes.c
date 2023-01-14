@@ -5,30 +5,26 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool findNode(pnode *head, int find_num)
-{
+bool findNode(pnode *head, int find_num) {
     pnode curr = *head;
-    pnode prev=NULL;
-    while (curr != NULL)
-    {
+    pnode prev = NULL;
+    while (curr != NULL) {
 
-        if (curr->node_num == find_num)
-        {
+        if (curr->node_num == find_num) {
             *head = curr;
             return true;
         }
-        prev=curr;
+        prev = curr;
         curr = curr->next;
     }
-    *head= prev;
+    *head = prev;
     return false;
 }
-bool create_node(pnode *newNode)
-{
-    pnode new_node=NULL;
-    new_node = (pnode)malloc(sizeof(node));
-    if (new_node == NULL)
-    {
+
+bool create_node(pnode *newNode) {
+    pnode new_node = NULL;
+    new_node = (pnode) malloc(sizeof(node));
+    if (new_node == NULL) {
         // allocation failed
         return false;
     }
@@ -40,19 +36,56 @@ bool create_node(pnode *newNode)
     return true;
 }
 
-void print_node(pnode head)
-{
+void print_node(pnode head) {
     printf("node_num: %d\n", head->node_num);
     printf("edges: ");
-    while (head->edges != NULL)
-    {
-
+    while (head->edges != NULL) {
         head->edges = head->edges->next;
     }
     printf("\n");
-    while (head->next != NULL)
-    {
+    while (head->next != NULL) {
         printf("%d ", head->next->node_num);
         head->next = head->next->next;
     }
+}
+
+pnode get_node(pnode *head, int node_num) {
+    if (head == NULL) {
+        return NULL;
+    }
+    pnode currNode = *head;
+    while ((currNode != NULL) && (currNode->node_num != node_num)) {
+        currNode = currNode->next;
+    }
+    return currNode;
+}
+
+pnode get_prev_node(pnode *head, int node_num) {
+    pnode prevNode = NULL;
+    pnode currNode = *head;
+    while (currNode != NULL) {
+        if (currNode->node_num == node_num) {
+            return prevNode;
+        }
+        prevNode = currNode;
+        currNode = currNode->next;
+    }
+    return NULL;
+}
+
+
+/**
+ *
+ * @param head pointer to the head of the linked list
+ * @return pnode pointer to the last node in the list
+ *
+ * It starts at the head of the list and uses a while loop to iterate through the list until it reaches the last node.
+ * It returns a pointer to the last node.
+ */
+pnode get_last_node(pnode *head) {
+    pnode last = *head;
+    while (last->next != NULL) {
+        last = last->next;
+    }
+    return last;
 }

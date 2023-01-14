@@ -1,12 +1,11 @@
-#include "graph.h"
-#include "nodes.h"
-#include "edges.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include "graph.h"
+#include "nodes.h"
+#include "edges.h"
 
-
+//TODO  the function does not read the last n.
 void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
     pnode pNode = NULL, realHead = NULL, temp = NULL;
@@ -39,11 +38,11 @@ void build_graph_cmd(pnode *head) {
                 exit(0);
             }
             temp = temp->next;
-            pNode=temp;
+            pNode = temp;
             pNode->node_num = inputNum;
         }
         pNode = temp;
-        if(pNode->node_num==0) {
+        if (pNode->node_num == 0) {
             pNode->node_num = inputNum;
         }
         pEdge = pNode->edges;
@@ -81,6 +80,33 @@ void build_graph_cmd(pnode *head) {
 }
 
 void delete_node_cmd(pnode *head) {
+    int node_num;
+    if (head == NULL) {
+        return;
+    }
+    scanf("%d", &node_num);
+    pnode delete_node = get_node(head, node_num);
+    if (delete_node != NULL) {
+        pnode prevNode = get_prev_node(head, node_num);
+        if (prevNode != NULL) {
+            prevNode->next = delete_node->next;
+        } else {
+            *head = delete_node->next;
+        }
+    }
+    delete_outgoing_edge(delete_node);
+    free(delete_node);
+
+    //delete incoming edges
+    pnode currNode = *head;
+    while (currNode != NULL){
+        //TODO not done.
+
+
+        currNode = currNode->next;
+    }
+
+
 }
 
 void deleteGraph_cmd(pnode *head) {
@@ -89,7 +115,6 @@ void deleteGraph_cmd(pnode *head) {
     }
     pnode currNode = *head;
     pnode nextNode;
-
     while (currNode != NULL) {
         pedge currEdge = currNode->edges;
         pedge nextEdge = NULL;
@@ -104,19 +129,43 @@ void deleteGraph_cmd(pnode *head) {
     }
 }
 
-void insert_node_cmd(pnode *head) {
-    int node_num = getchar();
-    pnode pnew_node = *head;
-    if (findNode(&pnew_node, node_num)) {
-    } else { // node doesn't exsits
-        pnew_node = NULL;
-        create_node(&pnew_node);
-        pnew_node->node_num = node_num;
-//        do
-//        {
-//        } while (/* condition */){
-//
-//        }
 
+/**
+ * Insert a node into a linked list of nodes, and add edges to the node.
+ *
+ * @param head pointer to pointer to the head of the linked list
+ *
+ * It first reads an integer value as the node number.
+ * Then it calls the get_node function to check if the node with the given number already exists in the list.
+ * If the node already exists, it calls the delete_outgoing_edge function to remove any existing edges from the node,
+ * and then it reads edge information (endpoint node number and weight) in a while loop.
+ * For each edge, it calls the get_node function to get the endpoint node,
+ * and the createEdge function to create an edge between the current node and the endpoint node with the given weight.
+ *
+ * If the node does not exist, it calls the get_last_node function to get the last node in the list,
+ * creates a new node using create_node function, sets the node number for the new node,
+ * and reads edge information in a similar way as above and creates edges for the new node.
+ *
+ */
+void insert_node_cmd(pnode *head) {
+    int node_num, end_point_node_num, node_weight;
+    scanf("%d", &node_num);
+    pnode currNode = get_node(head, node_num);
+
+    if (currNode != NULL) { // node exist
+        delete_outgoing_edge(currNode);
+        while (scanf(" %d %d", &end_point_node_num, &node_weight) == 2) {
+            pnode end_point = get_node(head, end_point_node_num);
+            createEdge(currNode, end_point, node_weight);
+        }
+    } else { // node doesn't exist
+        currNode = get_last_node(head);
+        create_node(&currNode->next);
+        currNode = currNode->next;
+        currNode->node_num = node_num;
+        while (scanf(" %d %d", &end_point_node_num, &node_weight) == 2) {
+            pnode end_point = get_node(head, end_point_node_num);
+            createEdge(currNode, end_point, node_weight);
+        }
     }
 }
