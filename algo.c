@@ -27,7 +27,7 @@ void build_graph_cmd(pnode *head) {
     realHead = *head;
 //    pEdge=&(pNode->edges);
     scanf(" %c", &input);
-    for (int i = 1; i < numberOfNodes; i++) {
+    for (int i = 0; i < numberOfNodes; i++) {
         //get and update node_num
         temp = realHead;
         scanf("%d", &inputNum);
