@@ -55,6 +55,7 @@ void print_edge(pedge *head) {
         current = current->next;
     }
 }
+
 /**
 * delete all the outgoing edges of a node.
 *
@@ -65,7 +66,7 @@ void print_edge(pedge *head) {
 * it updates the pointer of current edge and frees the memory allocated for the current edge.
 *
 */
-void delete_outgoing_edge(pnode current_node) {
+void delete_outgoing_edges(pnode current_node) {
     pedge edge_head = current_node->edges;
     while (edge_head->next != NULL) {
         pedge temp = edge_head;
@@ -73,4 +74,40 @@ void delete_outgoing_edge(pnode current_node) {
         free(temp);
     }
     current_node->edges = NULL;
+}
+
+
+/**
+ * delete all the ingoing edges of a node.
+ *
+ * @param head pointer to the head of the linked list of nodes
+ * @param current_node pointer to the node whose ingoing edges will be deleted
+ *
+ * This function takes a pointer to the head of the linked list of nodes, and a pointer to a node,
+ * and deletes all the edges that go into that node.
+ * It starts at the head of the linked list of nodes and uses a while loop to iterate through the list,
+ * for each node it checks the edges, it compares the endpoint of the edge with the current_node.
+ * If they are the same, it removes the edge by updating the pointers and freeing the memory allocated for the edge.
+ *
+ */
+void delete_ingoing_edges(pnode head, pnode current_node) {
+    pnode temp = head;
+    while (temp != NULL) {
+        pedge prev = NULL;
+        pedge current = temp->edges;
+        while (current != NULL) {
+            if (current->endpoint == current_node) {
+                if (prev == NULL) {
+                    temp->edges = current->next;
+                } else {
+                    prev->next = current->next;
+                }
+                free(current);
+                break;
+            }
+            prev = current;
+            current = current->next;
+        }
+        temp = temp->next;
+    }
 }

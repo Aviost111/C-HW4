@@ -73,7 +73,6 @@ pnode get_prev_node(pnode *head, int node_num) {
     return NULL;
 }
 
-
 /**
  *
  * @param head pointer to the head of the linked list

@@ -79,6 +79,18 @@ void build_graph_cmd(pnode *head) {
     }
 }
 
+/**
+ * delete a node from the graph
+ *
+ * @param head pointer to the head of the linked list of nodes
+ *
+ * It first reads a node number from the user input. Then it uses the get_node function to find the node with the matching number in the linked list.
+ * if it finds the node, it gets the previous node and updates the next pointer to skip the node that is going to be deleted.
+ * Then it calls delete_outgoing_edges function to delete all the edges that go out of that node.
+ * It also calls delete_ingoing_edges function to delete all the edges that go into that node.
+ * Finally, it frees the memory allocated for the deleted node.
+ *
+ */
 void delete_node_cmd(pnode *head) {
     int node_num;
     if (head == NULL) {
@@ -94,19 +106,9 @@ void delete_node_cmd(pnode *head) {
             *head = delete_node->next;
         }
     }
-    delete_outgoing_edge(delete_node);
+    delete_outgoing_edges(delete_node);
+    delete_ingoing_edges(*head, delete_node);
     free(delete_node);
-
-    //delete incoming edges
-    pnode currNode = *head;
-    while (currNode != NULL){
-        //TODO not done.
-
-
-        currNode = currNode->next;
-    }
-
-
 }
 
 void deleteGraph_cmd(pnode *head) {
@@ -137,7 +139,7 @@ void deleteGraph_cmd(pnode *head) {
  *
  * It first reads an integer value as the node number.
  * Then it calls the get_node function to check if the node with the given number already exists in the list.
- * If the node already exists, it calls the delete_outgoing_edge function to remove any existing edges from the node,
+ * If the node already exists, it calls the delete_outgoing_edges function to remove any existing edges from the node,
  * and then it reads edge information (endpoint node number and weight) in a while loop.
  * For each edge, it calls the get_node function to get the endpoint node,
  * and the createEdge function to create an edge between the current node and the endpoint node with the given weight.
@@ -153,7 +155,7 @@ void insert_node_cmd(pnode *head) {
     pnode currNode = get_node(head, node_num);
 
     if (currNode != NULL) { // node exist
-        delete_outgoing_edge(currNode);
+        delete_outgoing_edges(currNode);
         while (scanf(" %d %d", &end_point_node_num, &node_weight) == 2) {
             pnode end_point = get_node(head, end_point_node_num);
             createEdge(currNode, end_point, node_weight);

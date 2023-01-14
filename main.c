@@ -22,11 +22,11 @@ int main() {
                 break;
 
             case 'S':
-                shortsPath_cmd(head);
-
+              //  shortsPath_cmd(head);
                 break;
+
             case 'T':
-                TSP_cmd(head);
+              //  TSP_cmd(head);
                 break;
 
             default:
