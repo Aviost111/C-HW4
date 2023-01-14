@@ -8,5 +8,6 @@ void print_edge(pedge head);
 void delete_outgoing_edges(pnode current_node);
 bool createEdge(pnode from, pnode to, int weight);
 void delete_ingoing_edges(pnode head,pnode current_node);
+int get_edge_weight(pnode from, pnode to);
 
 #endif

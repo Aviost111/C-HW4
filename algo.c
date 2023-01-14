@@ -4,6 +4,7 @@
 #include "graph.h"
 #include "nodes.h"
 #include "edges.h"
+#include <limits.h>
 
 //TODO  the function does not read the last n.
 void build_graph_cmd(pnode *head) {
@@ -112,7 +113,7 @@ void delete_node_cmd(pnode *head) {
 }
 
 void deleteGraph_cmd(pnode *head) {
-    if (head == NULL) {
+    if (*head == NULL) {
         return;
     }
     pnode currNode = *head;
@@ -170,4 +171,15 @@ void insert_node_cmd(pnode *head) {
             createEdge(currNode, end_point, node_weight);
         }
     }
+}
+
+void TSP_cmd(pnode head){
+    int num_of_vertices;
+    scanf("%d", &num_of_vertices);
+
+    int vertices[num_of_vertices];
+    for(int i=0 ; i<num_of_vertices;i++){
+        scanf("%d", &vertices[i]);
+    }
+
 }
