@@ -178,7 +178,7 @@ void insert_node_cmd(pnode *head) {
  * Find minimum between two numbers.
  */
 int min(int num1, int num2) {
-    return (num1 > num2) ? num2 : num1;
+    return (num1 >= num2) ? num2 : num1;
 }
 
 void swap(int *first, int *second) {
@@ -312,8 +312,9 @@ void shortsPath_cmd(pnode head) {
 }
 
 void TSP_cmd(pnode head) {
-    int size;
+    int size,dijkAns;
     scanf("%d", &size);
+//    int *permutation=(int*) malloc(sizeof(int)*size);
     int permutation[size];
     for (int i = 0; i < size; i++) {
         scanf("%d", &permutation[i]);
@@ -324,9 +325,20 @@ void TSP_cmd(pnode head) {
     do {
         int current_path_weight = 0;
         for (int i = 0; i < size - 1; i++) {
-            current_path_weight += dijkstra_algorithm(head, permutation[i], permutation[i + 1]);
+            dijkAns = dijkstra_algorithm(head, permutation[i], permutation[i + 1]);
+            if(dijkAns==INT_MAX){
+                current_path_weight=INT_MAX;
+                break;
+            }
+            current_path_weight+=dijkAns;
+
         }
-        current_path_weight += dijkstra_algorithm(head, permutation[size - 1], permutation[0]);
+        dijkAns = dijkstra_algorithm(head, permutation[size - 1], permutation[0]);
+        if(dijkAns!=INT_MAX) {
+            current_path_weight += dijkAns;
+        }else{
+            current_path_weight=INT_MAX;
+        }
         min_path = min(min_path, current_path_weight);
 
     } while (next_permutation(permutation, size));
