@@ -334,7 +334,7 @@ void TSP_cmd(pnode head) {
 
         }
         dijkAns = dijkstra_algorithm(head, permutation[size - 1], permutation[0]);
-        if(dijkAns!=INT_MAX) {
+        if((dijkAns!=INT_MAX)&&(current_path_weight!=INT_MAX)) {
             current_path_weight += dijkAns;
         }else{
             current_path_weight=INT_MAX;
