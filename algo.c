@@ -174,13 +174,14 @@ void insert_node_cmd(pnode *head) {
     }
 }
 
-void TSP_cmd(pnode head){
+void TSP_cmd(pnode head) {
     int num_of_vertices;
     scanf("%d", &num_of_vertices);
 
     int vertices[num_of_vertices];
-    for(int i=0 ; i<num_of_vertices;i++){
+    for (int i = 0; i < num_of_vertices; i++) {
         scanf("%d", &vertices[i]);
     }
+
 
 }
