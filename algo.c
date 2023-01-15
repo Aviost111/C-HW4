@@ -5,6 +5,7 @@
 #include "nodes.h"
 #include "edges.h"
 #include <limits.h>
+#include "queue.h"
 
 void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
@@ -241,6 +242,43 @@ bool next_permutation(int *permutation, int size) {
     return true;
 }
 
+void shortsPath_cmd(pnode head) {
+    int rows = num_of_nodes(head), cols = 3, start, dest, newDist;
+    pedge edges = NULL;
+    node current;
+    pnode starter = head;
+    ptuple newTuple;
+    if (scanf("%d%d", &start, &dest) != 2) {
+        printf("problem with input");
+        return;
+    }
+    findNode(&starter, start);
+    ptuple startT = create_tuple(*starter, 0);
+    //don't forget to free
+    int **mat = make_int_dijk_mat(head, start);
+    pqueue myQueue = create_queue(rows);
+    //do i need to free?
+    add(myQueue, *startT);
+    while (!isEmpty(myQueue)) {
+        current = *(poll(myQueue));
+        //3 is visited
+        mat[current.index][3] = 1;
+        edges = current.edges;
+        while (edges != NULL) {
+            if (mat[edges->endpoint->index][3] == 1) {
+                edges = edges->next;
+                continue;
+            }
+            newDist = mat[current.index][1] + edges->weight;
+            if (newDist < mat[edges->endpoint->index][1]) {
+                mat[edges->endpoint->index][1] = newDist;
+                newTuple = create_tuple(*(edges->endpoint), newDist);
+                add(myQueue, *newTuple);
+            }
+        }
+    }
+}
+
 void TSP_cmd(pnode head) {
     int size;
     int count = 0;
@@ -251,45 +289,19 @@ void TSP_cmd(pnode head) {
     }
     qsort(permutation, size, sizeof(int), compare);
     int min_path = INT_MAX;
-void shortsPath_cmd(pnode head){
-    int rows= num_of_nodes(head),cols=3,start,dest,newDist;
-    pedge edges=NULL;
-    node current;
-    pnode starter=head;
-    ptuple newTuple;
-    if(scanf("%d%d",&start,&dest)!=2){
-        printf("problem with input");
-        return;
-    }
-    findNode(&starter,start);
-    ptuple startT= create_tuple(*starter,0);
-    //don't forget to free
-    int** mat= make_int_dijk_mat(head,start);
-    pqueue myQueue= create_queue(rows);
-    //do i need to free?
-    add(myQueue,*startT);
-    while (!isEmpty(myQueue)){
-        current= *(poll(myQueue));
-        //3 is visited
-        mat[current.index][3]=1;
-        edges=current.edges;
-        while (edges!=NULL){
-            if(mat[edges->endpoint->index][3]==1){
-                edges=edges->next;
-                continue;
-            }
-            newDist=mat[current.index][1]+edges->weight;
-            if(newDist<mat[edges->endpoint->index][1]){
-                mat[edges->endpoint->index][1]=newDist;
-                newTuple= create_tuple(*(edges->endpoint),newDist);
-                add(myQueue,*newTuple);
-            }
-        }
 
-    int vertices[num_of_vertices];
-    for (int i = 0; i < num_of_vertices; i++) {
-        scanf("%d", &vertices[i]);
-    }
+    do {
+        int current_path_weight = 0;
+        for (int i = 0; i < size - 1; i++) {
+            pnode from = get_node(&head, permutation[i]);
+            pnode to = get_node(&head, permutation[i + 1]);
+            current_path_weight += get_edge_weight(from, to); //TODO Dijkstra
+            count++;
+        }
+        pnode from = get_node(&head, permutation[size - 1]);
+        pnode to = get_node(&head, permutation[0]);
+        current_path_weight += get_edge_weight(from, to); //TODO Dijkstra
+        min_path = min(min_path, current_path_weight);
 
     } while (next_permutation(permutation, size));
 
