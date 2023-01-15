@@ -6,7 +6,6 @@
 #include "edges.h"
 #include <limits.h>
 
-//TODO  the function does not read the last n.
 void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
     pnode pNode = NULL, realHead = NULL, temp = NULL;
