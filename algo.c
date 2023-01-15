@@ -23,9 +23,7 @@ void build_graph_cmd(pnode *head) {
         exit(0);
     }
     //pnode points to first node
-//    pNode = *head;
     realHead = *head;
-//    pEdge=&(pNode->edges);
     scanf(" %c", &input);
     for (int i = 0; i < numberOfNodes; i++) {
         //get and update node_num
@@ -337,7 +335,7 @@ void TSP_cmd(pnode head) {
 
     } while (next_permutation(permutation, size));
 
-    if (min_path != INT_MAX) { //TODO change when you know what Dijkstra return.
+    if (min_path != INT_MAX) {
         printf("TSP shortest path: %d \n", min_path);
     } else printf("TSP shortest path: -1 \n");
 }
