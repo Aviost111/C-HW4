@@ -4,8 +4,9 @@
 #include "graph.h"
 #include "nodes.h"
 #include "edges.h"
+#include "queue.h"
 
-//TODO  the function does not read the last n.
+
 void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
     pnode pNode = NULL, realHead = NULL, temp = NULL;
@@ -171,3 +172,46 @@ void insert_node_cmd(pnode *head) {
         }
     }
 }
+
+void shortsPath_cmd(pnode head){
+    int rows= num_of_nodes(head),cols=3,start,dest,newDist;
+    pedge edges=NULL;
+    node current;
+    pnode starter=head;
+    ptuple newTuple;
+    if(scanf("%d%d",&start,&dest)!=2){
+        printf("problem with input");
+        return;
+    }
+    findNode(&starter,start);
+    ptuple startT= create_tuple(*starter,0);
+    //don't forget to free
+    int** mat= make_int_dijk_mat(head,start);
+    pqueue myQueue= create_queue(rows);
+    //do i need to free?
+    add(myQueue,*startT);
+    while (!isEmpty(myQueue)){
+        current= *(poll(myQueue));
+        //3 is visited
+        mat[current.index][3]=1;
+        edges=current.edges;
+        while (edges!=NULL){
+            if(mat[edges->endpoint->index][3]==1){
+                edges=edges->next;
+                continue;
+            }
+            newDist=mat[current.index][1]+edges->weight;
+            if(newDist<mat[edges->endpoint->index][1]){
+                mat[edges->endpoint->index][1]=newDist;
+                newTuple= create_tuple(*(edges->endpoint),newDist);
+                add(myQueue,*newTuple);
+            }
+        }
+
+    }
+
+
+
+}
+
+
