@@ -121,5 +121,5 @@ int get_edge_weight(pnode from, pnode to){
         }
         edge = edge->next;
     }
-    return -1;
+    return 0 ;
 }

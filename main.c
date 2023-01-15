@@ -26,7 +26,7 @@ int main() {
                 break;
 
             case 'T':
-                //TSP_cmd(head);
+                TSP_cmd(head);
                 break;
 
             default:
