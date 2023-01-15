@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 bool create_edge(pedge *head, int weight, int endpoint, pnode realHead) {
     pnode pNode = realHead;
@@ -110,4 +111,15 @@ void delete_ingoing_edges(pnode head, pnode current_node) {
         }
         temp = temp->next;
     }
+}
+
+int get_edge_weight(pnode from, pnode to){
+    pedge edge = from->edges;
+    while (edge != NULL){
+        if(edge->endpoint == to){
+            return edge->weight;
+        }
+        edge = edge->next;
+    }
+    return -1;
 }

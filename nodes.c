@@ -63,6 +63,9 @@ pnode get_node(pnode *head, int node_num) {
 }
 
 pnode get_prev_node(pnode *head, int node_num) {
+    if (head == NULL) {
+        return NULL;
+    }
     pnode prevNode = NULL;
     pnode currNode = *head;
     while (currNode != NULL) {
