@@ -308,7 +308,7 @@ void shortsPath_cmd(pnode head) {
     }
     ans = dijkstra_algorithm(head, start, dest);
     //TODO if problem check space after ans
-    printf("Dijsktra shortest path: %d", ans);
+    printf("Dijsktra shortest path: %d \n", ans);
 }
 
 void TSP_cmd(pnode head) {
@@ -333,17 +333,11 @@ void TSP_cmd(pnode head) {
             current_path_weight+=dijkAns;
 
         }
-        dijkAns = dijkstra_algorithm(head, permutation[size - 1], permutation[0]);
-        if((dijkAns!=INT_MAX)&&(current_path_weight!=INT_MAX)) {
-            current_path_weight += dijkAns;
-        }else{
-            current_path_weight=INT_MAX;
-        }
         min_path = min(min_path, current_path_weight);
 
     } while (next_permutation(permutation, size));
 
     if (min_path != INT_MAX) { //TODO change when you know what Dijkstra return.
-        printf("TSP shortest path: %d", min_path);
-    } else printf("TSP shortest path: -1 ");
+        printf("TSP shortest path: %d \n", min_path);
+    } else printf("TSP shortest path: -1 \n");
 }
