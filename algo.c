@@ -130,6 +130,7 @@ void deleteGraph_cmd(pnode *head) {
         free(currNode);
         currNode = nextNode;
     }
+    *head = NULL;
 }
 
 

@@ -9,12 +9,12 @@ NODES_H = nodes.h
 ALGO_O = algo.o
 ALGO_H = algo.h
 
-
 all: graph
 
 .PHONY: all clean
 
-graph: $(MAIN_O) $(ALGO_O) $(NODES_O) $(EDGES_O)
+graph: $(MAIN_O) $(ALGO_O) $(NODES_O) $(EDGES_O) $(GRAPH_H)
+	$(CC) $(FLAGS) -o graph $(MAIN_O) $(ALGO_O) $(NODES_O) $(EDGES_O)
 
 #Create o files
 
