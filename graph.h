@@ -1,6 +1,8 @@
 #ifndef GRAPH_
 #define GRAPH_
 
+#include <stdbool.h>
+
 typedef struct GRAPH_NODE_ *pnode;
 
 typedef struct edge_ {
@@ -12,7 +14,8 @@ typedef struct edge_ {
 
 typedef struct GRAPH_NODE_ {
     int node_num;
-    int index;
+    int distance;
+    bool visited;
     pedge edges;
     struct GRAPH_NODE_ *next;
 } node, *pnode;

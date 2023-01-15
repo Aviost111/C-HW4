@@ -5,7 +5,6 @@
 #include "nodes.h"
 #include "edges.h"
 #include <limits.h>
-#include "queue.h"
 
 void build_graph_cmd(pnode *head) {
     int numberOfNodes = 0;
@@ -242,46 +241,78 @@ bool next_permutation(int *permutation, int size) {
     return true;
 }
 
+// Function to find the node with the smallest distance
+// that hasn't been visited yet
+pnode poll(pnode head) {
+    pnode min_node = NULL;
+    int shortest_distance = INT_MAX;
+    pnode current = head;
+    while (current != NULL) {
+        if (!current->visited && current->distance < shortest_distance) {
+            shortest_distance = current->distance;
+            min_node = current;
+        }
+        current = current->next;
+    }
+    return min_node;
+}
+
+// Function to initialize the graph for Dijkstra's algorithm
+void initialize(pnode head, int start_node) {
+    pnode current = head;
+    while (current != NULL) {
+        current->distance = INT_MAX;
+        current->visited = false;
+        current = current->next;
+    }
+    pnode start = get_node(&head, start_node);
+    start->distance = 0;
+}
+
+// Dijkstra's shortest path algorithm
+int dijkstra_algorithm(pnode head, int start, int dest) {
+    int distance;
+    pnode min_node = NULL, adj = NULL, end = NULL;
+    pedge current_edge = NULL;
+    initialize(head, start);
+
+    while (true) {
+        min_node = poll(head);
+        if (min_node == NULL) {
+            break;
+        }
+        min_node->visited = true;
+        adj = NULL;
+        current_edge = min_node->edges;
+        while (current_edge != NULL) {
+            adj = current_edge->endpoint;
+            if (!adj->visited) {
+                distance = current_edge->weight;
+                if (min_node->distance + distance < adj->distance) {
+                    adj->distance = min_node->distance + distance;
+                }
+            }
+            current_edge = current_edge->next;
+        }
+    }
+
+    end = get_node(&head, dest);
+    return end->distance;
+}
+
 void shortsPath_cmd(pnode head) {
-    int rows = num_of_nodes(head), cols = 3, start, dest, newDist;
-    pedge edges = NULL;
-    node current;
-    pnode starter = head;
-    ptuple newTuple;
+    int start, dest, ans;
     if (scanf("%d%d", &start, &dest) != 2) {
         printf("problem with input");
         return;
     }
-    findNode(&starter, start);
-    ptuple startT = create_tuple(*starter, 0);
-    //don't forget to free
-    int **mat = make_int_dijk_mat(head, start);
-    pqueue myQueue = create_queue(rows);
-    //do i need to free?
-    add(myQueue, *startT);
-    while (!isEmpty(myQueue)) {
-        current = *(poll(myQueue));
-        //3 is visited
-        mat[current.index][3] = 1;
-        edges = current.edges;
-        while (edges != NULL) {
-            if (mat[edges->endpoint->index][3] == 1) {
-                edges = edges->next;
-                continue;
-            }
-            newDist = mat[current.index][1] + edges->weight;
-            if (newDist < mat[edges->endpoint->index][1]) {
-                mat[edges->endpoint->index][1] = newDist;
-                newTuple = create_tuple(*(edges->endpoint), newDist);
-                add(myQueue, *newTuple);
-            }
-        }
-    }
+    ans = dijkstra_algorithm(head, start, dest);
+    //TODO if problem check space after ans
+    printf("Dijsktra shortest path: %d", ans);
 }
 
 void TSP_cmd(pnode head) {
     int size;
-    int count = 0;
     scanf("%d", &size);
     int permutation[size];
     for (int i = 0; i < size; i++) {
@@ -293,14 +324,9 @@ void TSP_cmd(pnode head) {
     do {
         int current_path_weight = 0;
         for (int i = 0; i < size - 1; i++) {
-            pnode from = get_node(&head, permutation[i]);
-            pnode to = get_node(&head, permutation[i + 1]);
-            current_path_weight += get_edge_weight(from, to); //TODO Dijkstra
-            count++;
+            current_path_weight += dijkstra_algorithm(head, permutation[i], permutation[i + 1]);
         }
-        pnode from = get_node(&head, permutation[size - 1]);
-        pnode to = get_node(&head, permutation[0]);
-        current_path_weight += get_edge_weight(from, to); //TODO Dijkstra
+        current_path_weight += dijkstra_algorithm(head, permutation[size - 1], permutation[0]);
         min_path = min(min_path, current_path_weight);
 
     } while (next_permutation(permutation, size));
@@ -308,5 +334,4 @@ void TSP_cmd(pnode head) {
     if (min_path != INT_MAX) { //TODO change when you know what Dijkstra return.
         printf("TSP shortest path: %d", min_path);
     } else printf("TSP shortest path: -1 ");
-    printf("%d",count);
 }

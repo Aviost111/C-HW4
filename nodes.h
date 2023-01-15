@@ -16,7 +16,5 @@ pnode get_last_node(pnode *head);
 
 pnode get_prev_node(pnode *head, int node_num);
 int num_of_nodes(pnode head);
-int* all_nodes(pnode head,int start);
-int** make_int_dijk_mat(pnode head,int start);
 
 #endif
