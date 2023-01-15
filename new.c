@@ -100,3 +100,83 @@ void TSP_cmd(pnode head) {
     } else printf("TSP shortest path: -1 ");
     printf("%d",count);
 }
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <limits.h>
+
+#define MAX_NODES 1000
+
+// Node structure for a graph
+typedef struct node {
+    int node_num;
+    int distance;
+    bool visited;
+    struct edge *edges;
+    struct node *next;
+} node;
+
+// Edge structure for a graph
+typedef struct edge {
+    int weight;
+    struct node *endpoint;
+    struct edge *next;
+} edge;
+
+// Function to find the node with the smallest distance
+// that hasn't been visited yet
+node* find_smallest_distance_node(node *head) {
+    node *smallest_node = NULL;
+    int smallest_distance = INT_MAX;
+    node *current = head;
+    while (current != NULL) {
+        if (!current->visited && current->distance < smallest_distance) {
+            smallest_distance = current->distance;
+            smallest_node = current;
+        }
+        current = current->next;
+    }
+    return smallest_node;
+}
+
+// Function to initialize the graph for Dijkstra's algorithm
+void initialize_graph(node *head, int start_node) {
+    node *current = head;
+    while (current != NULL) {
+        current->distance = INT_MAX;
+        current->visited = false;
+        current = current->next;
+    }
+    node *start = get_node(head, start_node);
+    start->distance = 0;
+}
+
+// Dijkstra's shortest path algorithm
+void dijkstra(node *head, int start_node, int end_node) {
+    initialize_graph(head, start_node);
+
+    while (true) {
+        node *smallest_node = find_smallest_distance_node(head);
+        if (smallest_node == NULL) {
+            break;
+        }
+        smallest_node->visited = true;
+        node *neighbor = head;
+        edge *current_edge = smallest_node->edges;
+        while (current_edge != NULL) {
+            neighbor = current_edge->endpoint;
+            if (!neighbor->visited) {
+                int distance = current_edge->weight;
+                if (smallest_node->distance + distance < neighbor->distance) {
+                    neighbor->distance = smallest_node->distance + distance;
+                }
+            }
+            current_edge = current_edge->next;
+        }
+    }
+
+    node *end = get_node(head, end_node);
+    printf("Shortest distance from node %d to node %d is %d", start_node, end_node, end->distance);
+}
