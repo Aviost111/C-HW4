@@ -38,19 +38,6 @@ bool create_node(pnode *newNode) {
     return true;
 }
 
-void print_node(pnode head) {
-    printf("node_num: %d\n", head->node_num);
-    printf("edges: ");
-    while (head->edges != NULL) {
-        head->edges = head->edges->next;
-    }
-    printf("\n");
-    while (head->next != NULL) {
-        printf("%d ", head->next->node_num);
-        head->next = head->next->next;
-    }
-}
-
 pnode get_node(pnode *head, int node_num) {
     if (head == NULL) {
         return NULL;
@@ -92,14 +79,5 @@ pnode get_last_node(pnode *head) {
         last = last->next;
     }
     return last;
-}
-
-int num_of_nodes(pnode head) {
-    int count = 0;
-    while (head != NULL) {
-        count++;
-        head = head->next;
-    }
-    return count;
 }
 

@@ -309,7 +309,6 @@ void shortsPath_cmd(pnode head) {
         return;
     }
     ans = dijkstra_algorithm(head, start, dest);
-    //TODO if problem check space after ans
     printf("Dijsktra shortest path: %d \n", ans);
 }
 

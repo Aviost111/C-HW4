@@ -63,7 +63,7 @@ void delete_outgoing_edges(pnode current_node) {
     while (edge_head != NULL) {
         pedge temp = edge_head->next;
         free(edge_head);
-        edge_head=temp;
+        edge_head = temp;
     }
     current_node->edges = NULL;
 }
@@ -102,15 +102,4 @@ void delete_ingoing_edges(pnode head, pnode current_node) {
         }
         temp = temp->next;
     }
-}
-
-int get_edge_weight(pnode from, pnode to){
-    pedge edge = from->edges;
-    while (edge != NULL){
-        if(edge->endpoint == to){
-            return edge->weight;
-        }
-        edge = edge->next;
-    }
-    return 0 ;
 }
