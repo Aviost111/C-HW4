@@ -31,6 +31,8 @@ int main() {
             default:
                 break;
         }
+
     }
+    deleteGraph_cmd(&head);
     return 0;
 }

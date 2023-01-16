@@ -48,15 +48,6 @@ bool createEdge(pnode from, pnode to, int weight) {
 }
 
 
-void print_edge(pedge *head) {
-    pedge current = *head;
-    while (current != NULL) {
-        printf("%d ", current->endpoint->node_num);
-        printf("%d", current->weight);
-        current = current->next;
-    }
-}
-
 /**
 * delete all the outgoing edges of a node.
 *

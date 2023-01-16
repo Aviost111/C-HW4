@@ -157,7 +157,9 @@ void insert_node_cmd(pnode *head) {
         delete_outgoing_edges(currNode);
         while (scanf(" %d %d", &end_point_node_num, &node_weight) == 2) {
             pnode end_point = get_node(head, end_point_node_num);
-            createEdge(currNode, end_point, node_weight);
+            if(!createEdge(currNode, end_point, node_weight)){
+                exit(0);
+            }
         }
     } else { // node doesn't exist
         currNode = get_last_node(head);
@@ -166,7 +168,9 @@ void insert_node_cmd(pnode *head) {
         currNode->node_num = node_num;
         while (scanf(" %d %d", &end_point_node_num, &node_weight) == 2) {
             pnode end_point = get_node(head, end_point_node_num);
-            createEdge(currNode, end_point, node_weight);
+            if(!createEdge(currNode, end_point, node_weight)) {
+                exit(0);
+            }
         }
     }
 }
@@ -310,7 +314,7 @@ void shortsPath_cmd(pnode head) {
 }
 
 void TSP_cmd(pnode head) {
-    int size, dijkAns;
+    int size, dijskAns;
     scanf("%d", &size);
 //    int *permutation=(int*) malloc(sizeof(int)*size);
     int permutation[size];
@@ -323,12 +327,12 @@ void TSP_cmd(pnode head) {
     do {
         int current_path_weight = 0;
         for (int i = 0; i < size-1; i++) {
-            dijkAns = dijkstra_algorithm(head, permutation[i], permutation[i + 1]);
-            if (dijkAns == INT_MAX) {
+            dijskAns = dijkstra_algorithm(head, permutation[i], permutation[i + 1]);
+            if (dijskAns == INT_MAX) {
                 current_path_weight = INT_MAX;
                 break;
             }
-            current_path_weight += dijkAns;
+            current_path_weight += dijskAns;
 
         }
         min_path = min(min_path, current_path_weight);
