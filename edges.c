@@ -60,10 +60,10 @@ bool createEdge(pnode from, pnode to, int weight) {
 */
 void delete_outgoing_edges(pnode current_node) {
     pedge edge_head = current_node->edges;
-    while (edge_head->next != NULL) {
-        pedge temp = edge_head;
-        edge_head = edge_head->next;
-        free(temp);
+    while (edge_head != NULL) {
+        pedge temp = edge_head->next;
+        free(edge_head);
+        edge_head=temp;
     }
     current_node->edges = NULL;
 }
