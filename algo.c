@@ -283,6 +283,9 @@ int dijkstra_algorithm(pnode head, int start, int dest) {
         if (min_node == NULL) {
             break;
         }
+        if(min_node->node_num==dest){
+            break;
+        }
         min_node->visited = true;
         adj = NULL;
         current_edge = min_node->edges;
@@ -316,7 +319,7 @@ void TSP_cmd(pnode head) {
     int size, dijskAns;
     scanf("%d", &size);
 //    int *permutation=(int*) malloc(sizeof(int)*size);
-    int permutation[size];
+    int* permutation=(int*) malloc(sizeof(int)*size);
     for (int i = 0; i < size; i++) {
         scanf("%d", &permutation[i]);
     }
@@ -341,4 +344,5 @@ void TSP_cmd(pnode head) {
     if (min_path != INT_MAX) {
         printf("TSP shortest path: %d \n", min_path);
     } else printf("TSP shortest path: -1 \n");
+    free(permutation);
 }
